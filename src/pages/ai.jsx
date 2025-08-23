@@ -20,7 +20,8 @@ export default function AIChatAssistant() {
     setInput("");
 
     try {
-      const res = await fetch("https://wecure-backend.onrender.com/aiAssistant", {
+      const apiUrl = import.meta.env.VITE_API_URL;
+      const res = await fetch(`${apiUrl}/aiAssistant`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
