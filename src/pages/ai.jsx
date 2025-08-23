@@ -20,7 +20,7 @@ export default function AIChatAssistant() {
     setInput("");
 
     try {
-      const res = await fetch("http://localhost:5000/api/aiAssistant", {
+      const res = await fetch("https://wecure-backend.onrender.com/aiAssistant", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
