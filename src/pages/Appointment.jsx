@@ -8,7 +8,7 @@ import { timeslots } from "../data/timeSlots";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { API_URL } from "../config";
+
 
 const Appointment = () => {
   const navigate = useNavigate();
@@ -38,6 +38,7 @@ const Appointment = () => {
       return null;
     }
     try {
+      const API_URL = import.meta.env.VITE_API_URL;
       const response = await fetch(`${API_URL}/appointments`, {
         method: "POST",
         headers: {

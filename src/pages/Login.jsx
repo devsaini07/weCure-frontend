@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { useState } from "react";
-import { API_URL } from "../config"; 
 import { ToastContainer,toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 const Login = () => {
@@ -13,7 +12,7 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
+    const API_URL = import.meta.env.VITE_API_URL;
     const response = await fetch(`${API_URL}/auth/login`,{
       method: "POST",
       headers: {'Content-Type': 'application/json'},

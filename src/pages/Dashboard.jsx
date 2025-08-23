@@ -1,7 +1,6 @@
 // src/pages/Dashboard.jsx
 
 import React, { useEffect, useState } from "react";
-import { API_URL } from "../config";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Navbar from "./Navbar";
@@ -15,6 +14,7 @@ const Dashboard = () => {
       const token = localStorage.getItem("token");
 
       try {
+        const API_URL = import.meta.env.VITE_API_URL;
         const response = await fetch(`${API_URL}/appointments`, {
           headers: {
             Authorization: `Bearer ${token}`,

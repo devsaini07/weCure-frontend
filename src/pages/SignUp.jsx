@@ -1,7 +1,6 @@
 // Signup.jsx
 
-import React, { useState } from "react";
-import { API_URL } from "../config"; // Adjust the import path as necessary
+import React, { useState } from "react"; // Adjust the import path as necessary
 const Signup = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -10,20 +9,25 @@ const Signup = () => {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    
-    const response = await fetch(`${API_URL}/auth/signup`, {
-      method:"POST",
-      headers: { 'Content-Type': 'application/json' },
+
+    const API_URL = import.meta.env.VITE_API_URL + "/api";
+    const fullUrl = `${API_URL}/api/auth/signup`; // Or your specific path
+
+    // --- ADD THIS LINE ---
+    console.log("Attempting to fetch:", fullUrl);
+    const response = await fetch(fullUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ firstName, lastName, email, password }),
     });
 
     const data = await response.json();
 
-    if(response.ok){
+    if (response.ok) {
       alert("Signup successful! Please login.");
       // Optionally redirect to login page
       window.location.href = "/login";
-    }else{
+    } else {
       alert(data.msg);
     }
   };
@@ -107,7 +111,10 @@ const Signup = () => {
 
         <p className="text-center text-gray-500 mt-8 text-sm">
           Already have an account?{" "}
-          <a href="/login" className="text-blue-600 hover:underline font-medium">
+          <a
+            href="/login"
+            className="text-blue-600 hover:underline font-medium"
+          >
             Login
           </a>
         </p>
