@@ -10,7 +10,7 @@ const Signup = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
 
-    const API_URL = import.meta.env.VITE_API_URL + "/api";
+    const API_URL = import.meta.env.VITE_API_URL;
     const fullUrl = `${API_URL}/api/auth/signup`; // Or your specific path
 
     // --- ADD THIS LINE ---
