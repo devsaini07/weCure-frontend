@@ -21,7 +21,7 @@ export default function AIChatAssistant() {
 
     try {
       const apiUrl = import.meta.env.VITE_API_URL;
-      const res = await fetch(`${apiUrl}/aiAssistant`, {
+      const res = await fetch(`${apiUrl}/api/aiAssistant`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
