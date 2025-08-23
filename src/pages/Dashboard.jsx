@@ -40,7 +40,7 @@ const Dashboard = () => {
   return (
     <>
       
-      <section className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 py-12 px-6">
+      <section className="min-h-screen pt-24 bg-gradient-to-br from-blue-50 to-blue-200 py-12 px-6">
         <h1 className="text-4xl font-extrabold text-blue-700 mb-8 text-center">
           My Appointments
         </h1>

@@ -75,7 +75,7 @@ const Appointment = () => {
   };
   return (
     <>
-      <section className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 py-12 flex justify-center items-start px-4">
+      <section className="pt-24 min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 py-12 flex justify-center items-start px-4">
         <div className="bg-white p-10 rounded-3xl shadow-2xl w-full max-w-2xl border border-blue-100">
           <h1 className="text-4xl font-extrabold text-blue-700 mb-8 text-center animate-fade-in">
             Book an Appointment

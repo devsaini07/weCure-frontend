@@ -35,7 +35,7 @@ const Login = () => {
   return (
     <>
       {/* <Navbar /> */}
-      <section className="min-h-screen bg-gradient-to-r from-blue-50 to-blue-200 flex items-center justify-center px-6 py-12">
+      <section className="min-h-screen pt-24 bg-gradient-to-r from-blue-50 to-blue-200 flex items-center justify-center px-6 py-12">
         <div className="bg-white p-10 rounded-3xl shadow-xl w-full max-w-lg border border-blue-100">
           <h1 className="text-4xl font-extrabold text-blue-700 mb-8 text-center animate-fade-in">
             Welcome Back 👋

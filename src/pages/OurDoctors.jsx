@@ -9,7 +9,7 @@ const OurDoctors = () => {
   return (
     <>
     
-      <section className="bg-blue-50 py-12 px-8">
+      <section className=" pt-24 bg-blue-50 py-12 px-8">
         <h1 className="text-center text-4xl font-bold mb-10 text-blue-900">
           Our Specialist Doctors
         </h1>

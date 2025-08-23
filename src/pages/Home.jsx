@@ -11,7 +11,7 @@ const Home = () => {
     <>
       {/* <Navbar /> */}
 
-      <section className="bg-gradient-to-r from-blue-50 to-blue-100 py-28 px-8">
+      <section className="pt-24 bg-gradient-to-r from-blue-50 to-blue-100 py-28 px-8">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10">
           {/* Step 1 */}
           <div className="flex flex-col items-center text-center bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition duration-300">

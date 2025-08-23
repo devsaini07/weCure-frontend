@@ -53,7 +53,7 @@ export default function AIChatAssistant() {
   }, [messages]);
 
   return (
-    <div className="flex flex-col h-screen bg-gradient-to-br from-green-50 via-blue-50 to-indigo-100">
+    <div className="pt-24 flex flex-col h-screen bg-gradient-to-br from-green-50 via-blue-50 to-indigo-100">
       {/* Header */}
       <header className="bg-white/80 backdrop-blur-md shadow-sm p-4 flex justify-between items-center border-b border-gray-200 sticky top-0 z-10">
         <h1 className="text-2xl font-bold text-gray-800 tracking-tight flex items-center gap-3">
