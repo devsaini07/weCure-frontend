@@ -165,7 +165,7 @@ const Appointment = () => {
                 <textarea
                   id="reason"
                   value={reason}
-                  onChange={(e) => setReason(e.targe.value)}
+                  onChange={(e) => setReason(e.target.value)}
                   rows={4}
                   placeholder="Briefly describe your symptoms or reason for the visit..."
                   required
