@@ -1,41 +1,38 @@
 // src/pages/Appointment.jsx
 
 import React, { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import doctors from "../data/doctors";
+import { timeslots } from "../data/timeSlots";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import { timeslots } from "../data/timeSlots";
-import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
 const Appointment = () => {
   const navigate = useNavigate();
-  const [selectedDoctor, setSelectedDoctor] = useState("");
+  const location = useLocation();
+
+  // This line gets the doctor's name passed from the OurDoctors page
+  const preselectedDoctor = location.state?.doctorName || "";
+
+  // Set the initial state of the form, using the preselected doctor if available
+  const [selectedDoctor, setSelectedDoctor] = useState(preselectedDoctor);
   const [date, setDate] = useState("");
   const [timeSlot, setTimeSlot] = useState("");
   const [reason, setReason] = useState("");
 
+  // Your handleSubmit function remains the same
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
     const userId = localStorage.getItem("userId");
     const isLoggedIn = !!localStorage.getItem("token");
-    
-    console.log({
-      doctor: selectedDoctor,
-      date,
-      timeSlot,
-      reason,
-    });
+
     if (!isLoggedIn) {
-      // redirect to login if not logged in
       toast.error("Please login before booking an appointment! 🚫");
-      setTimeout(() => {
-        navigate("/login");
-      }, 2000);
-      return null;
+      setTimeout(() => navigate("/login"), 2000);
+      return;
     }
     try {
       const API_URL = import.meta.env.VITE_API_URL;
@@ -53,14 +50,11 @@ const Appointment = () => {
           reason,
         }),
       });
-      
 
       const data = await response.json();
 
       if (response.ok) {
         toast.success("Appointment booked successfully! 🚀");
-
-        // Clear form
         setSelectedDoctor("");
         setDate("");
         setTimeSlot("");
@@ -73,94 +67,125 @@ const Appointment = () => {
       toast.error("Something went wrong. Please try again.");
     }
   };
+  const today = new Date().toISOString().split("T")[0];
   return (
     <>
-      <section className="pt-24 min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 py-12 flex justify-center items-start px-4">
-        <div className="bg-white p-10 rounded-3xl shadow-2xl w-full max-w-2xl border border-blue-100">
-          <h1 className="text-4xl font-extrabold text-blue-700 mb-8 text-center animate-fade-in">
-            Book an Appointment
-          </h1>
+      <Navbar />
+      <section className="min-h-screen bg-slate-50 pt-24 pb-16">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <h1 className="text-4xl font-bold text-slate-800 tracking-tight">
+              Book an Appointment
+            </h1>
+            <p className="mt-3 text-lg text-slate-600">
+              Fill out the form below to schedule your visit.
+            </p>
+          </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Doctor selection */}
-            <div>
-              <label className="block text-gray-700 font-medium mb-2">
-                Select Doctor
-              </label>
-              <select
-                value={selectedDoctor}
-                onChange={(e) => setSelectedDoctor(e.target.value)}
-                required
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 focus:outline-none transition"
-              >
-                <option value="">-- Choose a Doctor --</option>
-                {doctors.map((doc) => (
-                  <option key={doc.id} value={doc.name}>
-                    {doc.name} ({doc.specialty})
+          <div className="bg-white p-8 rounded-xl shadow-md border border-slate-200">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Doctor Selection */}
+              <div>
+                <label
+                  htmlFor="doctor"
+                  className="block text-sm font-medium text-slate-700 mb-1"
+                >
+                  Select Doctor
+                </label>
+                <select
+                  id="doctor"
+                  value={selectedDoctor}
+                  onChange={(e) => setSelectedDoctor(e.target.value)}
+                  required
+                  className="w-full px-4 py-3 bg-white border border-slate-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="" disabled>
+                    -- Choose a Doctor --
                   </option>
-                ))}
-              </select>
-            </div>
+                  {doctors.map((doc) => (
+                    <option key={doc.id} value={doc.name}>
+                      {doc.name} ({doc.specialty})
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-            {/* Date picker */}
-            <div>
-              <label className="block text-gray-700 font-medium mb-2">
-                Appointment Date
-              </label>
-              <input
-                type="date"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
-                required
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 focus:outline-none transition"
-              />
-            </div>
+              {/* Date Picker */}
+              <div>
+                <label
+                  htmlFor="date"
+                  className="block text-sm font-medium text-slate-700 mb-1"
+                >
+                  Appointment Date
+                </label>
+                <input
+                  id="date"
+                  type="date"
+                  value={date}
+                  onChange={(e) => setDate(e.target.value)}
+                  required
+                  // This 'min' attribute prevents selecting past dates
+                  min={today}
+                  className="w-full px-4 py-3 bg-white border border-slate-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
 
-            {/* Time picker */}
-            <div>
-              <label className="block text-gray-700 font-medium mb-2">
-                Time Slot
-              </label>
-              <select
-                value={timeSlot}
-                onChange={(e) => setTimeSlot(e.target.value)}
-                required
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 focus:outline-none transition"
+              {/* Time Slot Picker */}
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  Available Time Slots
+                </label>
+                <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
+                  {timeslots.map((slot) => (
+                    <button
+                      key={slot}
+                      type="button"
+                      onClick={() => setTimeSlot(slot)}
+                      className={`px-3 py-2 text-sm font-medium rounded-lg border transition-colors
+                        ${
+                          timeSlot === slot
+                            ? "bg-blue-600 text-white border-blue-600"
+                            : "bg-white text-slate-700 border-slate-300 hover:bg-slate-100"
+                        }`}
+                    >
+                      {slot}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Reason for Appointment */}
+              <div>
+                <label
+                  htmlFor="reason"
+                  className="block text-sm font-medium text-slate-700 mb-1"
+                >
+                  Reason for Visit
+                </label>
+                <textarea
+                  id="reason"
+                  value={reason}
+                  onChange={(e) => setReason(e.targe.value)}
+                  rows={4}
+                  placeholder="Briefly describe your symptoms or reason for the visit..."
+                  required
+                  className="w-full px-4 py-3 bg-white border border-slate-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                ></textarea>
+              </div>
+
+              {/* Submit Button */}
+              <button
+                type="submit"
+                className="w-full bg-blue-600 text-white text-base font-semibold py-3 rounded-lg hover:bg-blue-700 transition active:scale-95 shadow-sm"
               >
-                <option value="">-- Select Time Slot --</option>
-                {timeslots.map((slot) => (
-                  <option key={slot} value={slot}>
-                    {slot}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* Reason selection */}
-            <div>
-              <label className="block text-gray-700 font-medium mb-2">
-                Reason for Appointment
-              </label>
-              <textarea
-                value={reason}
-                onChange={(e) => setReason(e.target.value)}
-                rows={4}
-                placeholder="Describe your symptoms, concerns, or reason for visit..."
-                required
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 focus:outline-none transition"
-              ></textarea>
-            </div>
-
-            {/* Submit button */}
-            <button
-              type="submit"
-              className="w-full bg-blue-600 text-white text-lg font-semibold py-3 rounded-xl hover:bg-blue-700 hover:scale-[1.02] transition active:scale-95 shadow-md"
-            >
-              Confirm Appointment
-            </button>
-          </form>
+                Confirm Appointment
+              </button>
+            </form>
+          </div>
         </div>
       </section>
+
+      <ToastContainer position="top-right" autoClose={2000} />
       <Footer />
     </>
   );
