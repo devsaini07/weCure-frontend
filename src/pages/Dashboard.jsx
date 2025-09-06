@@ -115,7 +115,7 @@ const Dashboard = () => {
                             {appt.doctor}
                           </h3>
                           <p className="text-slate-500 text-sm">
-                            Cardiology Specialist
+                            {appt.specialty}
                           </p>
                         </div>
                         <span
